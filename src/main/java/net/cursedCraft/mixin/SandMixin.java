@@ -16,6 +16,9 @@ public class SandMixin {
 
     }
 
+    @Inject(at=@At("RETURN"), method="getFallDelay", cancellable = true)
+    protected void slowDownPlease(CallbackInfoReturnable<Integer> info){info.setReturnValue((int)(Math.random()*11+10));};
+
 
 
 }
