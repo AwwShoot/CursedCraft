@@ -1,6 +1,7 @@
 
 package net.cursedCraft;
 
+import net.cursedCraft.common.CursedRegistry;
 import net.fabricmc.api.ModInitializer;
 
 public class CursedCore implements ModInitializer {
@@ -10,6 +11,7 @@ public class CursedCore implements ModInitializer {
         // However, some things (like resources) may still be uninitialized.
         // Proceed with mild caution.
 
-        System.out.println("Hello Fabric world!");
+        System.out.println("initializiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiing");
+        //CursedRegistry.register();
     }
 }

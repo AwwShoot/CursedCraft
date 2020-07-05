@@ -22,3 +22,21 @@ purple biome
 red rock in sky at night
 
 splashnsip potions
+
+Tycoon clicker game built in
+
+Glory to Arstotzka
+
+Mine bitcoin both ingame and through their PCs
+
+steal obscure and worthless personal info (ironically)
+
+Prototype mod: Upcycle {
+reinforce tools with their higher-tier material rather than throw them away
+
+Upcycling block to do so
+    3 functions: Reduce, Reuse, Recycle
+    Reduce Disenchants the tool and enchants a book with weaker versions of the enchantments removed
+    Reuse allows stone and golden items to be reinforced with iron, and iron items reinforced with diamond
+    Recycle uncrafts the tool and gives you back some of the materials
+}
