@@ -4,6 +4,7 @@ package net.cursedCraft;
 import net.cursedCraft.common.CursedRegistry;
 import net.fabricmc.api.ModInitializer;
 
+
 public class CursedCore implements ModInitializer {
     @Override
     public void onInitialize() {
@@ -12,6 +13,8 @@ public class CursedCore implements ModInitializer {
         // Proceed with mild caution.
 
         System.out.println("initializiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiing");
-        //CursedRegistry.register();
+
+        CursedRegistry.register();
+
     }
 }
