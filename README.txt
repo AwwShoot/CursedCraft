@@ -27,7 +27,7 @@ Tycoon clicker game built in
 
 Glory to Arstotzka
 
-Mine bitcoin both ingame and through their PCs
+Mine bitcoin both ingame and through user PCs
 
 steal obscure and worthless personal info (ironically)
 
