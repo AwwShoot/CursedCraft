@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "cursedcraft:block/upcycling_machine_front",
+    "north": "cursedcraft:block/upcycling_machine_front",
+    "south": "cursedcraft:block/upcycling_machine_front",
+    "east": "cursedcraft:block/upcycling_machine_front",
+    "west": "cursedcraft:block/upcycling_machine_front",
+    "up": "cursedcraft:block/upcycling_machine_top",
+    "down": "minecraft:block/oak_planks"
+  }
+}

@@ -2,6 +2,7 @@ package net.cursedCraft.common;
 
 import net.cursedCraft.common.blockentities.UpcyclingBlockEntity;
 import net.cursedCraft.common.blocks.UpcyclingBlock;
+import net.cursedCraft.common.items.FloatyStick;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -38,6 +39,7 @@ public class CursedRegistry {
      * BlockItem is a subclass of Item specifically for placing a block.
      */
     public static final Item UPCYCLING_MACHINE_ITEM= new BlockItem(UPCYCLING_MACHINE, new Item.Settings().group(ItemGroup.TOOLS));
+    public static final Item AYBERKSTICK= new FloatyStick(new Item.Settings().group(ItemGroup.TOOLS));
 
     /**
      * BlockEntityTypes link a BlockEntity to a Block
@@ -51,6 +53,7 @@ public class CursedRegistry {
 
         Registry.register(Registry.ITEM, getID("upcycling_machine"), UPCYCLING_MACHINE_ITEM);
 
+        Registry.register(Registry.ITEM, getID("floaty_stick"), AYBERKSTICK);
     };
 
 }
