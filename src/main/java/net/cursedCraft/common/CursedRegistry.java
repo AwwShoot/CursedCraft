@@ -3,7 +3,9 @@ package net.cursedCraft.common;
 import net.cursedCraft.common.blockentities.UpcyclingBlockEntity;
 import net.cursedCraft.common.blocks.UpcyclingBlock;
 import net.cursedCraft.common.items.FloatyStick;
+import net.cursedCraft.common.screen.UpcyclingScreenHandler;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
@@ -12,6 +14,7 @@ import net.minecraft.block.entity.FurnaceBlockEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -39,13 +42,20 @@ public class CursedRegistry {
      * BlockItem is a subclass of Item specifically for placing a block.
      */
     public static final Item UPCYCLING_MACHINE_ITEM= new BlockItem(UPCYCLING_MACHINE, new Item.Settings().group(ItemGroup.TOOLS));
-    public static final Item AYBERKSTICK= new FloatyStick(new Item.Settings().group(ItemGroup.TOOLS));
+    public static final Item AYBERKSTICK= new FloatyStick(new Item.Settings().maxDamage(255).group(ItemGroup.TOOLS));
+    public static final Item ANCIENT_SHULKER_RESIDUE = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
 
     /**
      * BlockEntityTypes link a BlockEntity to a Block
      * between <> will be the class of the BlockEntity
      */
-    public static BlockEntityType<UpcyclingBlockEntity> UPCYCLING_MACHINE_BLOCKENTITY;// Not registered because it's confusing. Looking for a way around using BlockEntity for this.
+    public static final BlockEntityType<UpcyclingBlockEntity> UPCYCLING_MACHINE_BLOCKENTITY=null;// Not registered because it's confusing. Looking for a way around using BlockEntity for this.
+
+    /**
+     * ScreenHandlerTypes require a factory input when registering. A factory is ClassName::new. This is just passing the 'new' function as if it were an object.
+     * Object::method is how you pass a method as if it was an object.
+     */
+    //public static final ScreenHandlerType<UpcyclingScreenHandler> UPCYCLING_MACHINE_HANDLER= ScreenHandlerRegistry.registerSimple(getID("upcycling_machine"), UpcyclingScreenHandler::new);
 
     public static void register(){
 
@@ -54,6 +64,9 @@ public class CursedRegistry {
         Registry.register(Registry.ITEM, getID("upcycling_machine"), UPCYCLING_MACHINE_ITEM);
 
         Registry.register(Registry.ITEM, getID("floaty_stick"), AYBERKSTICK);
+        Registry.register(Registry.ITEM, getID("ancient_shulker_residue"), ANCIENT_SHULKER_RESIDUE);
+        // Screenhandlers are given the same path as their other related objects.
+        //Registry.register(Registry.SCREEN_HANDLER, getID("upcycling_machine"), new ScreenHandlerType<UpcyclingScreenHandler>());
     };
 
 }

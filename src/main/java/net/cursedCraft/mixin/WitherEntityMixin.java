@@ -23,7 +23,7 @@ public abstract class WitherEntityMixin extends LivingEntity{
     }
 
     /**
-     * @author piss
+     * @author Aww_Shoot. This allows withers to have status effects applied to them.
      */
     @Overwrite
     public boolean addStatusEffect(StatusEffectInstance effect) {

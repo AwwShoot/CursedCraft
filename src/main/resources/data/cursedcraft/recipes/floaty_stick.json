@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " XZ",
+    " #X",
+    "#  "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
+    "X": {
+      "item": "cursedcraft:ancient_shulker_residue"
+    },
+    "Z": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "result": {
+    "item": "cursedcraft:floaty_stick"
+  }
+}
