@@ -16,6 +16,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import static net.cursedCraft.common.CursedRegistry.UPCYCLING_SCREEN_HANDLER;
 import static net.minecraft.screen.ScreenHandlerType.ANVIL;
 import static net.minecraft.screen.ScreenHandlerType.GENERIC_9X1;
 
@@ -36,14 +37,15 @@ public class UpcyclingBlock extends Block {
             return ActionResult.SUCCESS;
         } else {
             player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
-            return ActionResult.SUCCESS;
+            player.incrementStat(Stats.INTERACT_WITH_GRINDSTONE);
+            return ActionResult.CONSUME;
         }
     }
 
 
     public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
         return new SimpleNamedScreenHandlerFactory((i, playerInventory, playerEntity) -> {
-            return new UpcyclingScreenHandler(GENERIC_9X1,i, playerInventory, ScreenHandlerContext.create(world, pos));
+            return new UpcyclingScreenHandler(UPCYCLING_SCREEN_HANDLER,i, playerInventory, ScreenHandlerContext.create(world, pos));
         }, TITLE);
     }
 }

@@ -11,9 +11,14 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.FurnaceBlockEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -52,10 +57,10 @@ public class CursedRegistry {
     public static final BlockEntityType<UpcyclingBlockEntity> UPCYCLING_MACHINE_BLOCKENTITY=null;// Not registered because it's confusing. Looking for a way around using BlockEntity for this.
 
     /**
-     * ScreenHandlerTypes require a factory input when registering. A factory is ClassName::new. This is just passing the 'new' function as if it were an object.
-     * Object::method is how you pass a method as if it was an object.
+     * make screenhandlertypes not final and assign them in the registry
+     *
      */
-    //public static final ScreenHandlerType<UpcyclingScreenHandler> UPCYCLING_MACHINE_HANDLER= ScreenHandlerRegistry.registerSimple(getID("upcycling_machine"), UpcyclingScreenHandler::new);
+    public static ScreenHandlerType<UpcyclingScreenHandler> UPCYCLING_SCREEN_HANDLER;
 
     public static void register(){
 
@@ -66,7 +71,11 @@ public class CursedRegistry {
         Registry.register(Registry.ITEM, getID("floaty_stick"), AYBERKSTICK);
         Registry.register(Registry.ITEM, getID("ancient_shulker_residue"), ANCIENT_SHULKER_RESIDUE);
         // Screenhandlers are given the same path as their other related objects.
-        //Registry.register(Registry.SCREEN_HANDLER, getID("upcycling_machine"), new ScreenHandlerType<UpcyclingScreenHandler>());
+        UPCYCLING_SCREEN_HANDLER= ScreenHandlerRegistry.registerSimple(getID("upcycling_machine"), (int syncId, PlayerInventory inventory) -> {
+            return new UpcyclingScreenHandler(UPCYCLING_SCREEN_HANDLER, syncId, inventory, ScreenHandlerContext.EMPTY);
+        });
+
+
     };
 
 }
