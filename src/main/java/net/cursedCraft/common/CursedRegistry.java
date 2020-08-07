@@ -70,7 +70,10 @@ public class CursedRegistry {
 
         Registry.register(Registry.ITEM, getID("floaty_stick"), AYBERKSTICK);
         Registry.register(Registry.ITEM, getID("ancient_shulker_residue"), ANCIENT_SHULKER_RESIDUE);
-        // Screenhandlers are given the same path as their other related objects.
+        /**
+         * Screenhandlers are given the same path as their other related objects.
+         *  Use the fabric class ScreenHandler Registry to register screens and pass in a lambda function creating the ScreenHandler in order to circumvent its privated status.
+         */
         UPCYCLING_SCREEN_HANDLER= ScreenHandlerRegistry.registerSimple(getID("upcycling_machine"), (int syncId, PlayerInventory inventory) -> {
             return new UpcyclingScreenHandler(UPCYCLING_SCREEN_HANDLER, syncId, inventory, ScreenHandlerContext.EMPTY);
         });

@@ -1,6 +1,7 @@
 
 package net.cursedCraft;
 
+import net.cursedCraft.client.CursedClientInitializer;
 import net.cursedCraft.common.CursedRegistry;
 import net.fabricmc.api.ModInitializer;
 
@@ -15,6 +16,9 @@ public class CursedCore implements ModInitializer {
         System.out.println("initializiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiing");
 
         CursedRegistry.register();
+        CursedClientInitializer.onInitializeClient();
 
     }
+
+
 }
