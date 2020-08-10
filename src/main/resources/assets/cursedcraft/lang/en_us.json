@@ -2,7 +2,9 @@
   "item.cursedcraft.floaty_stick":"Shulker Wand",
   "item.cursedcraft.ancient_shulker_residue": "Ancient Shulker Residue",
 
-  "block.cursedcraft.upcycling_machine": "Upcycling Macine"
+  "block.cursedcraft.upcycling_machine": "Upcycling Macine",
+
+  "block.cursedcraft.grey_goo": "Grey Goo"
 
 
 }

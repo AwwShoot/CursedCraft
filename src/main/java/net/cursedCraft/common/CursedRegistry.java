@@ -1,6 +1,7 @@
 package net.cursedCraft.common;
 
 import net.cursedCraft.common.blockentities.UpcyclingBlockEntity;
+import net.cursedCraft.common.blocks.GreyGooBlock;
 import net.cursedCraft.common.blocks.UpcyclingBlock;
 import net.cursedCraft.common.items.FloatyStick;
 import net.cursedCraft.common.screen.UpcyclingScreenHandler;
@@ -43,10 +44,15 @@ public class CursedRegistry {
      */
     public static final Block UPCYCLING_MACHINE =  new UpcyclingBlock(FabricBlockSettings.of(Material.WOOD));
 
+    public static final Block GREY_GOO =new GreyGooBlock(FabricBlockSettings.of(Material.SPONGE));
+
     /**
      * BlockItem is a subclass of Item specifically for placing a block.
      */
     public static final Item UPCYCLING_MACHINE_ITEM= new BlockItem(UPCYCLING_MACHINE, new Item.Settings().group(ItemGroup.TOOLS));
+
+    public static final Item GREY_GOO_ITEM=new BlockItem(GREY_GOO, new Item.Settings().group(ItemGroup.MISC));
+
     public static final Item AYBERKSTICK= new FloatyStick(new Item.Settings().maxDamage(255).group(ItemGroup.TOOLS));
     public static final Item ANCIENT_SHULKER_RESIDUE = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
 
@@ -65,8 +71,10 @@ public class CursedRegistry {
     public static void register(){
 
         Registry.register(Registry.BLOCK, getID("upcycling_machine"), UPCYCLING_MACHINE);
+        Registry.register(Registry.BLOCK, getID("grey_goo"), GREY_GOO);
 
         Registry.register(Registry.ITEM, getID("upcycling_machine"), UPCYCLING_MACHINE_ITEM);
+        Registry.register(Registry.ITEM, getID("grey_goo"), GREY_GOO_ITEM);
 
         Registry.register(Registry.ITEM, getID("floaty_stick"), AYBERKSTICK);
         Registry.register(Registry.ITEM, getID("ancient_shulker_residue"), ANCIENT_SHULKER_RESIDUE);
