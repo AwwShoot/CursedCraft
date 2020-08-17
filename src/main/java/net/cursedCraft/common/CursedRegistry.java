@@ -1,15 +1,18 @@
 package net.cursedCraft.common;
 
 import net.cursedCraft.common.blockentities.UpcyclingBlockEntity;
+import net.cursedCraft.common.blocks.GrayGooBlock;
 import net.cursedCraft.common.blocks.GreyGooBlock;
 import net.cursedCraft.common.blocks.UpcyclingBlock;
 import net.cursedCraft.common.items.FloatyStick;
 import net.cursedCraft.common.screen.UpcyclingScreenHandler;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricMaterialBuilder;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
+import net.minecraft.block.MaterialColor;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.FurnaceBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -37,6 +40,8 @@ public class CursedRegistry {
         return new Identifier("cursedcraft", path);
     }
 
+
+    public static final Material GOO= (new FabricMaterialBuilder(MaterialColor.GRAY).burnable().build());
     /**
      * Create Block instances with FabricBlockSettings instead of Settings to make use of the API.
      * the field name is all caps snake case because it is a final field/constant.
@@ -44,7 +49,8 @@ public class CursedRegistry {
      */
     public static final Block UPCYCLING_MACHINE =  new UpcyclingBlock(FabricBlockSettings.of(Material.WOOD));
 
-    public static final Block GREY_GOO =new GreyGooBlock(FabricBlockSettings.of(Material.SPONGE));
+    public static final Block GREY_GOO =new GreyGooBlock(FabricBlockSettings.of(GOO));
+    public static final Block GRAY_GOO =new GrayGooBlock(FabricBlockSettings.of(GOO));
 
     /**
      * BlockItem is a subclass of Item specifically for placing a block.
@@ -52,6 +58,7 @@ public class CursedRegistry {
     public static final Item UPCYCLING_MACHINE_ITEM= new BlockItem(UPCYCLING_MACHINE, new Item.Settings().group(ItemGroup.TOOLS));
 
     public static final Item GREY_GOO_ITEM=new BlockItem(GREY_GOO, new Item.Settings().group(ItemGroup.MISC));
+    public static final Item GRAY_GOO_ITEM=new BlockItem(GRAY_GOO, new Item.Settings().group(ItemGroup.MISC));
 
     public static final Item AYBERKSTICK= new FloatyStick(new Item.Settings().maxDamage(255).group(ItemGroup.TOOLS));
     public static final Item ANCIENT_SHULKER_RESIDUE = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
@@ -72,9 +79,11 @@ public class CursedRegistry {
 
         Registry.register(Registry.BLOCK, getID("upcycling_machine"), UPCYCLING_MACHINE);
         Registry.register(Registry.BLOCK, getID("grey_goo"), GREY_GOO);
+        Registry.register(Registry.BLOCK, getID("gray_goo"), GRAY_GOO);
 
         Registry.register(Registry.ITEM, getID("upcycling_machine"), UPCYCLING_MACHINE_ITEM);
         Registry.register(Registry.ITEM, getID("grey_goo"), GREY_GOO_ITEM);
+        Registry.register(Registry.ITEM, getID("gray_goo"), GRAY_GOO_ITEM);
 
         Registry.register(Registry.ITEM, getID("floaty_stick"), AYBERKSTICK);
         Registry.register(Registry.ITEM, getID("ancient_shulker_residue"), ANCIENT_SHULKER_RESIDUE);

@@ -1,5 +1,20 @@
 burh
 
+ACTUAL TODO:
+make goo not spread to fire.
+make sure goo burns
+create rich gray goo
+create petrified gray goo
+create rich goo chunks
+create petrified rich goo
+make gray goo turn into petrified form when fire is nearby
+make gray goo become rich when it can no longer spread
+make petrified goo become rich petrified goo when fire is nearby
+make rich goo smelt into rich goo chunks
+make petrified rich goo craftable into multiple petrified goo blocks
+make an abstract goo which others inherit from for consistency
+all goo/fire reactions also take place with lava.
+
 to-do:
 teleport items to player randomly
 
