@@ -1,27 +1,21 @@
 package net.cursedCraft.common;
 
-import net.cursedCraft.common.blockentities.UpcyclingBlockEntity;
 import net.cursedCraft.common.blocks.GrayGooBlock;
 import net.cursedCraft.common.blocks.GreyGooBlock;
 import net.cursedCraft.common.blocks.UpcyclingBlock;
 import net.cursedCraft.common.items.FloatyStick;
+import net.cursedCraft.common.items.GoldBludgeon;
+import net.cursedCraft.common.materials.GoldBludgeonMaterial;
 import net.cursedCraft.common.screen.UpcyclingScreenHandler;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricMaterialBuilder;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.block.MaterialColor;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.entity.FurnaceBlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.screen.ScreenHandler;
+import net.minecraft.item.*;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Identifier;
@@ -42,6 +36,10 @@ public class CursedRegistry {
 
 
     public static final Material GOO= (new FabricMaterialBuilder(MaterialColor.GRAY).burnable().build());
+
+    public static final ToolMaterial GOLD_BLUDGEON_MATERIAL= new GoldBludgeonMaterial(1, 420, 1.3F, 6.0F, 22, () -> {
+        return Ingredient.ofItems(Items.GOLD_INGOT);
+    });
     /**
      * Create Block instances with FabricBlockSettings instead of Settings to make use of the API.
      * the field name is all caps snake case because it is a final field/constant.
@@ -63,11 +61,13 @@ public class CursedRegistry {
     public static final Item AYBERKSTICK= new FloatyStick(new Item.Settings().maxDamage(255).group(ItemGroup.TOOLS));
     public static final Item ANCIENT_SHULKER_RESIDUE = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
 
+    public static final GoldBludgeon GOLD_BLUDGEON = new GoldBludgeon(GOLD_BLUDGEON_MATERIAL, 0,-3.2F, new Item.Settings().group(ItemGroup.COMBAT));
+
     /**
      * BlockEntityTypes link a BlockEntity to a Block
      * between <> will be the class of the BlockEntity
      */
-    public static final BlockEntityType<UpcyclingBlockEntity> UPCYCLING_MACHINE_BLOCKENTITY=null;// Not registered because it's confusing. Looking for a way around using BlockEntity for this.
+
 
     /**
      * make screenhandlertypes not final and assign them in the registry
@@ -87,6 +87,7 @@ public class CursedRegistry {
 
         Registry.register(Registry.ITEM, getID("floaty_stick"), AYBERKSTICK);
         Registry.register(Registry.ITEM, getID("ancient_shulker_residue"), ANCIENT_SHULKER_RESIDUE);
+        Registry.register(Registry.ITEM, getID("gold_bludgeon"), GOLD_BLUDGEON);
         /**
          * Screenhandlers are given the same path as their other related objects.
          *  Use the fabric class ScreenHandler Registry to register screens and pass in a lambda function creating the ScreenHandler in order to circumvent its privated status.

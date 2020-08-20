@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ZXZ",
+    " #",
+    " # "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:gold_nugget"
+    },
+    "X": {
+      "item": "minecraft:gold_ingot"
+    },
+    "Z": {
+      "item": "minecraft:gold_block"
+    }
+  },
+  "result": {
+    "item": "cursedcraft:gold_bludgeon"
+  }
+}

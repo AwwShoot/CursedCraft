@@ -9,6 +9,7 @@
     "SandMixin",
     "ItemEntityMixin",
     "TitleMixin",
+    "ServerPlayerEntityMixin",
     "WitherEntityMixin"
   ],
   "injectors": {

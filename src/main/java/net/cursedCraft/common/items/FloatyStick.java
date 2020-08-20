@@ -19,11 +19,12 @@ public class FloatyStick extends Item {
         super(settings);
     }
     /**
-     * The damage method casts the lambda as Consumer in source code, but that's just an artifact. Ignore the cast and it works fine.
+     * The original damage method casts the lambda as Consumer in source code, but that's just an artifact. Ignore the cast and it works fine.
      */
     public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
         stack.damage(1, user, p -> p.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
         entity.addStatusEffect(new StatusEffectInstance(LEVITATION, 10000000, 4));
         return ActionResult.SUCCESS;
     }
+
 }
