@@ -50,6 +50,8 @@ public class CursedRegistry {
     public static final Block GREY_GOO =new GreyGooBlock(FabricBlockSettings.of(GOO));
     public static final Block GRAY_GOO =new GrayGooBlock(FabricBlockSettings.of(GOO));
 
+    public static final Block TBPI = new Block(FabricBlockSettings.of(Material.STONE));
+
     /**
      * BlockItem is a subclass of Item specifically for placing a block.
      */
@@ -62,6 +64,8 @@ public class CursedRegistry {
     public static final Item ANCIENT_SHULKER_RESIDUE = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
 
     public static final GoldBludgeon GOLD_BLUDGEON = new GoldBludgeon(GOLD_BLUDGEON_MATERIAL, 0,-3.2F, new Item.Settings().group(ItemGroup.COMBAT));
+
+    public static final Item TBPI_ITEM=new BlockItem(TBPI, new Item.Settings().group(ItemGroup.MISC));
 
     /**
      * BlockEntityTypes link a BlockEntity to a Block
@@ -80,10 +84,13 @@ public class CursedRegistry {
         Registry.register(Registry.BLOCK, getID("upcycling_machine"), UPCYCLING_MACHINE);
         Registry.register(Registry.BLOCK, getID("grey_goo"), GREY_GOO);
         Registry.register(Registry.BLOCK, getID("gray_goo"), GRAY_GOO);
+        Registry.register(Registry.BLOCK, getID("test_block_please_ignore"), TBPI);
 
         Registry.register(Registry.ITEM, getID("upcycling_machine"), UPCYCLING_MACHINE_ITEM);
         Registry.register(Registry.ITEM, getID("grey_goo"), GREY_GOO_ITEM);
         Registry.register(Registry.ITEM, getID("gray_goo"), GRAY_GOO_ITEM);
+        Registry.register(Registry.ITEM, getID("test_block_please_ignore"), TBPI_ITEM);
+
 
         Registry.register(Registry.ITEM, getID("floaty_stick"), AYBERKSTICK);
         Registry.register(Registry.ITEM, getID("ancient_shulker_residue"), ANCIENT_SHULKER_RESIDUE);

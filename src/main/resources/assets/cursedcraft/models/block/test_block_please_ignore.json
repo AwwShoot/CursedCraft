@@ -1,0 +1,9 @@
+
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "cursedcraft:block/tbpi_bottom",
+    "top": "cursedcraft:block/tbpi_top",
+    "side": "cursedcraft:block/tbpi_side"
+  }
+}
