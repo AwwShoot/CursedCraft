@@ -10,7 +10,8 @@
     "ItemEntityMixin",
     "TitleMixin",
     "ServerPlayerEntityMixin",
-    "WitherEntityMixin"
+    "WitherEntityMixin",
+    "LivingEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -58,7 +58,7 @@ public abstract class ServerPlayerEntityMixin extends Entity {
 
             tries++;
         }while(findLivableSpace(pos)==null&&tries<10);
-        this.setSpawnPoint(World.NETHER, findLivableSpace(pos)==null ? pos: findLivableSpace(pos), true, true);
+        this.setSpawnPoint(World.NETHER, findLivableSpace(pos)==null ? pos: findLivableSpace(pos), true, false);
         System.out.println(spawnPointPosition.getY());
 
 
