@@ -1,6 +1,7 @@
 package net.cursedCraft.common.screen;
 
 import net.cursedCraft.common.CursedRegistry;
+import net.cursedCraft.common.recipes.UpcyclingRecipe;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
@@ -14,8 +15,13 @@ import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.SmithingRecipe;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.world.World;
+
+import java.util.List;
 
 import static net.minecraft.item.Items.*;
 
@@ -23,10 +29,16 @@ public class UpcyclingScreenHandler extends ScreenHandler {
     private final Inventory result;
     private final Inventory input;
     private final ScreenHandlerContext context;
+    private World world;
+    private UpcyclingRecipe recipe;
+    private List<UpcyclingRecipe> recipelist;
 
     // most of this is copy/pasted from the GrindstoneScreenHandler and then edited around.
+    // using grindstones as a base was a mistake, I intended for this to work like smithing. hindsight is 2020 and confused
     public UpcyclingScreenHandler(ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
     this(syncId, playerInventory, ScreenHandlerContext.EMPTY);
+    this.world=playerInventory.player.world;
+    this.recipelist= this.world.getRecipeManager().method_30027(CursedRegistry.UPCYCLING);
     }
 
     public UpcyclingScreenHandler(int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
@@ -40,16 +52,8 @@ public class UpcyclingScreenHandler extends ScreenHandler {
             }
         };
         this.context = context;
-        this.addSlot(new Slot(this.input, 0, 49, 19) {
-            public boolean canInsert(ItemStack stack) {
-                return true;
-            }
-        });
-        this.addSlot(new Slot(this.input, 1, 49, 40) {
-            public boolean canInsert(ItemStack stack) {
-                return true;
-            }
-        });
+        this.addSlot(new Slot(this.input, 0, 49, 19));
+        this.addSlot(new Slot(this.input, 1, 49, 40) );
         this.addSlot(new Slot(this.result, 2, 129, 34) {
             public boolean canInsert(ItemStack stack) {
                 return false;
@@ -60,8 +64,10 @@ public class UpcyclingScreenHandler extends ScreenHandler {
 
                     world.syncWorldEvent(1042, blockPos, 0);
                 });
-                UpcyclingScreenHandler.this.input.setStack(0, ItemStack.EMPTY);
-                UpcyclingScreenHandler.this.input.setStack(1, ItemStack.EMPTY);
+                if(!UpcyclingScreenHandler.this.input.getStack(0).isEmpty())
+                    UpcyclingScreenHandler.this.input.getStack(0).decrement(1);
+                if(!UpcyclingScreenHandler.this.input.getStack(1).isEmpty())
+                    UpcyclingScreenHandler.this.input.getStack(1).decrement(1);
                 return stack;
             }
         });
@@ -85,42 +91,22 @@ public class UpcyclingScreenHandler extends ScreenHandler {
      * For now, nonsensical dummy outputs exist to let me know in game, what the screen is detecting.
      */
     public void updateResult() {
-        System.out.println("Got called");
-        ItemStack inputOne = this.input.getStack(0);
-        ItemStack InputTwo = this.input.getStack(1);
-        boolean objectInInput = !inputOne.isEmpty() || !InputTwo.isEmpty();
-        boolean bothFull = !inputOne.isEmpty() && !InputTwo.isEmpty();
-        if (!objectInInput) {
-            System.out.println("empty");
-            this.result.setStack(0, new ItemStack(IRON_BARS));
-        }else {
-
-            if (inputOne.getCount() > 1 || InputTwo.getCount() > 1 || !bothFull ) {
-                this.result.setStack(0, new ItemStack(LEATHER_BOOTS));
-
-                return;
-            }
-
-
-
-            if (bothFull) {
-                System.out.println("Always true my ass");
-                if (inputOne.getItem() != InputTwo.getItem()) {
-                    this.result.setStack(0, new ItemStack(BREAD));
-
-                    return;
-                }
-
-
-
-            }
+        List<UpcyclingRecipe> list = this.world.getRecipeManager().getAllMatches(CursedRegistry.UPCYCLING, this.input, this.world);
+        if (list.isEmpty()) {
+            System.out.println("no matching recipes found");
+            this.result.setStack(0, ItemStack.EMPTY);
+        } else {
+            this.recipe = list.get(0);
+            System.out.println("matching recipe found");
+            ItemStack itemStack = this.recipe.craft(this.input);
+            this.result.setStack(0, itemStack);
         }
 
 
     }
 
     public void onContentChanged(Inventory inventory) {
-        System.out.println("Something changed");
+
         super.onContentChanged(inventory);
         if (inventory == this.input) {
             this.updateResult();
@@ -128,31 +114,20 @@ public class UpcyclingScreenHandler extends ScreenHandler {
 
     }
     //If you do not implement this, shift clicking will softlock the game. IMPLEMENT IT.
-    public ItemStack transferSlot(PlayerEntity player, int index) {
-        ItemStack itemStack = ItemStack.EMPTY;
-        Slot slot = (Slot)this.slots.get(index);
+    public ItemStack transferSlot(PlayerEntity player, int index) {ItemStack itemStack = ItemStack.EMPTY;
+        Slot slot = this.slots.get(index);
         if (slot != null && slot.hasStack()) {
             ItemStack itemStack2 = slot.getStack();
             itemStack = itemStack2.copy();
-            ItemStack itemStack3 = this.input.getStack(0);
-            ItemStack itemStack4 = this.input.getStack(1);
             if (index == 2) {
                 if (!this.insertItem(itemStack2, 3, 39, true)) {
-                    return new ItemStack(ICE);
+                    return ItemStack.EMPTY;
                 }
 
                 slot.onStackChanged(itemStack2, itemStack);
             } else if (index != 0 && index != 1) {
-                if (!itemStack3.isEmpty() && !itemStack4.isEmpty()) {
-                    if (index >= 3 && index < 30) {
-                        if (!this.insertItem(itemStack2, 30, 39, false)) {
-                            return ItemStack.EMPTY;
-                        }
-                    } else if (index >= 30 && index < 39 && !this.insertItem(itemStack2, 3, 30, false)) {
-                        return ItemStack.EMPTY;
-                    }
-                } else if (!this.insertItem(itemStack2, 0, 2, false)) {
-                    return ItemStack.EMPTY;
+                if (index >= 3 && index < 39) {
+
                 }
             } else if (!this.insertItem(itemStack2, 3, 39, false)) {
                 return ItemStack.EMPTY;
@@ -210,4 +185,7 @@ public class UpcyclingScreenHandler extends ScreenHandler {
     public boolean canUse(PlayerEntity player) {
         return true;
     }
+
+
+
 }

@@ -6,6 +6,7 @@ import net.cursedCraft.common.blocks.UpcyclingBlock;
 import net.cursedCraft.common.items.FloatyStick;
 import net.cursedCraft.common.items.GoldBludgeon;
 import net.cursedCraft.common.materials.GoldBludgeonMaterial;
+import net.cursedCraft.common.recipes.UpcyclingRecipe;
 import net.cursedCraft.common.screen.UpcyclingScreenHandler;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricMaterialBuilder;
@@ -16,6 +17,9 @@ import net.minecraft.block.MaterialColor;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.*;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.SmithingRecipe;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Identifier;
@@ -67,6 +71,14 @@ public class CursedRegistry {
 
     public static final Item TBPI_ITEM=new BlockItem(TBPI, new Item.Settings().group(ItemGroup.MISC));
 
+    public static final RecipeType<UpcyclingRecipe> UPCYCLING =Registry.register(Registry.RECIPE_TYPE, getID("upcycling"), new RecipeType<UpcyclingRecipe>() {
+        public String toString() {
+            return "upcycling";
+        }
+    });
+
+    public static final RecipeSerializer<UpcyclingRecipe> UPCYLING_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, getID("upcycling"), new UpcyclingRecipe.Serializer());
+
     /**
      * BlockEntityTypes link a BlockEntity to a Block
      * between <> will be the class of the BlockEntity
@@ -102,6 +114,8 @@ public class CursedRegistry {
         UPCYCLING_SCREEN_HANDLER= ScreenHandlerRegistry.registerSimple(getID("upcycling_machine"), (int syncId, PlayerInventory inventory) -> {
             return new UpcyclingScreenHandler(UPCYCLING_SCREEN_HANDLER, syncId, inventory, ScreenHandlerContext.EMPTY);
         });
+
+
 
 
     };
