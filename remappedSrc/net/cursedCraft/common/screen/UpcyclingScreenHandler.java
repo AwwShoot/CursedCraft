@@ -38,7 +38,7 @@ public class UpcyclingScreenHandler extends ScreenHandler {
     public UpcyclingScreenHandler(ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
     this(syncId, playerInventory, ScreenHandlerContext.EMPTY);
     this.world=playerInventory.player.world;
-    this.recipelist= this.world.getRecipeManager().listAllOfType(CursedRegistry.UPCYCLING);
+    this.recipelist= this.world.getRecipeManager().method_30027(CursedRegistry.UPCYCLING);
     }
 
     public UpcyclingScreenHandler(int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {

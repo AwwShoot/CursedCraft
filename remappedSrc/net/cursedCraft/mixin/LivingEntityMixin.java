@@ -3,7 +3,6 @@ package net.cursedCraft.mixin;
 import net.minecraft.entity.*;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -29,7 +28,7 @@ public abstract class LivingEntityMixin extends Entity{
             zombie.updatePosition(this.getX(), this.getY(), this.getZ());
 
             world.spawnEntity(zombie);
-            zombie.initialize((ServerWorld)world, world.getLocalDifficulty(zombie.getBlockPos()), SpawnReason.SPAWNER , (EntityData)null, (CompoundTag)null);
+            zombie.initialize(world, world.getLocalDifficulty(zombie.getBlockPos()), SpawnReason.SPAWNER , (EntityData)null, (CompoundTag)null);
 
         }
     }

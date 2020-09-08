@@ -26,9 +26,7 @@ public abstract class ServerPlayerEntityMixin extends Entity {
 
     @Shadow private BlockPos spawnPointPosition;
 
-    @Shadow private float spawnAngle;
-
-    @Shadow public void setSpawnPoint(RegistryKey<World> dimension, BlockPos pos, float angle, boolean spawnPointSet, boolean bl){}
+    @Shadow public abstract void setSpawnPoint(RegistryKey<World> dimension, BlockPos pos, boolean spawnPointSet, boolean bl);
 
     public ServerPlayerEntityMixin(EntityType<?> type, World world) {
         super(type, world);
@@ -60,7 +58,7 @@ public abstract class ServerPlayerEntityMixin extends Entity {
 
             tries++;
         }while(findLivableSpace(pos)==null&&tries<10);
-        this.setSpawnPoint(World.NETHER, findLivableSpace(pos)==null ? pos: findLivableSpace(pos), yaw, true, false);
+        this.setSpawnPoint(World.NETHER, findLivableSpace(pos)==null ? pos: findLivableSpace(pos), true, false);
         System.out.println(spawnPointPosition.getY());
 
 

@@ -87,7 +87,7 @@ public abstract class ItemEntityMixin extends Entity {
             if (this.world.isClient) {
                 this.noClip = false;
             } else {
-                this.noClip = !this.world.isSpaceEmpty(this);
+                this.noClip = !this.world.doesNotCollide(this);
                 if (this.noClip) {
                     this.pushOutOfBlocks(this.getX(), (this.getBoundingBox().minY + this.getBoundingBox().maxY) / 2.0D, this.getZ());
                 }

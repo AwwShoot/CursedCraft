@@ -1,0 +1,3 @@
+to update the mod first go to the gradle.properties file and change the minecraft version to the new one
+find the gradle.properties values here https://modmuss50.me/fabric.html
+
