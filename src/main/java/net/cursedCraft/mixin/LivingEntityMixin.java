@@ -4,6 +4,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -24,12 +25,19 @@ public abstract class LivingEntityMixin extends Entity{
 
     @Inject(at=@At("RETURN"), method="updatePostDeath", cancellable = true)
     protected void undeadDontDie(CallbackInfo ci){
+
+
         if(this.getType().equals(EntityType.ZOMBIE)&&deathTime==19){
             ZombieEntity zombie=new ZombieEntity(EntityType.ZOMBIE, world);
-            zombie.updatePosition(this.getX(), this.getY(), this.getZ());
-
-            world.spawnEntity(zombie);
-            zombie.initialize((ServerWorld)world, world.getLocalDifficulty(zombie.getBlockPos()), SpawnReason.SPAWNER , (EntityData)null, (CompoundTag)null);
+            if(world.getBlockState(new BlockPos(this.getX(), this.getY(), this.getZ())).isAir()){
+                System.out.println("zombie will spawn, giving it coordinates");
+                zombie.updatePosition(this.getX(), this.getY(), this.getZ());
+                System.out.println("coords received. spawning zombie");
+                world.spawnEntity(zombie);
+                System.out.println("Zombie spawned: initializing");
+                //zombie.initialize((ServerWorld)this.world, world.getLocalDifficulty(zombie.getBlockPos()), SpawnReason.SPAWNER , null, null);
+                System.out.println("zombie initialized, what's the problem?");
+            }
 
         }
     }
