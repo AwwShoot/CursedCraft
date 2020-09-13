@@ -3,6 +3,8 @@ package net.cursedCraft.common;
 import net.cursedCraft.common.blocks.GrayGooBlock;
 import net.cursedCraft.common.blocks.GreyGooBlock;
 import net.cursedCraft.common.blocks.UpcyclingBlock;
+import net.cursedCraft.common.features.TreeStandFeature;
+import net.cursedCraft.common.features.TreeStandGenerator;
 import net.cursedCraft.common.items.FloatyStick;
 import net.cursedCraft.common.items.GoldBludgeon;
 import net.cursedCraft.common.materials.GoldBludgeonMaterial;
@@ -11,6 +13,7 @@ import net.cursedCraft.common.screen.UpcyclingScreenHandler;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricMaterialBuilder;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
+import net.fabricmc.fabric.api.structure.v1.FabricStructureBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.block.MaterialColor;
@@ -22,8 +25,14 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.SmithingRecipe;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.structure.StructurePieceType;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.gen.GenerationStep;
+import net.minecraft.world.gen.feature.ConfiguredStructureFeature;
+import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.gen.feature.StructureFeature;
 import org.lwjgl.system.CallbackI;
 
 import javax.tools.Tool;
@@ -98,16 +107,31 @@ public class CursedRegistry {
     public static final RecipeSerializer<UpcyclingRecipe> UPCYLING_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, getID("upcycling"), new UpcyclingRecipe.Serializer());
 
     /**
-     * BlockEntityTypes link a BlockEntity to a Block
+     * BlockEntityType objects link a BlockEntity to a Block
      * between <> will be the class of the BlockEntity
      */
 
 
     /**
-     * make screenhandlertypes not final and assign them in the registry
+     * make screenhandlertype objects not final and assign them in the registry
      *
      */
     public static ScreenHandlerType<UpcyclingScreenHandler> UPCYCLING_SCREEN_HANDLER;
+
+    /**
+     *  StructurePieceType objects are made from the generator's FeaturePiece class inside them
+     *  The word "piece" does not look or sound like a word anymore I've seen it so much recently
+     */
+
+    public static final StructurePieceType TREESTAND_PIECE_TYPE= TreeStandGenerator.FeaturePiece::new;
+
+    /**
+     * StructureFeature objects have to be configured like this I guess. most of this is from the wiki so I don't fully understand it :/
+     * One day I'll be good enough to contribute to the wiki and add my own examples for some of the stuff that isn't yet included on the wiki
+     */
+    private static final StructureFeature<DefaultFeatureConfig> TREESTAND_STRUCTURE = new TreeStandFeature(DefaultFeatureConfig.CODEC);
+    public static final ConfiguredStructureFeature<?, ?> TREESTAND_CONFIGURED = TREESTAND_STRUCTURE.configure(DefaultFeatureConfig.INSTANCE);
+
 
     public static void register(){
 
@@ -133,6 +157,18 @@ public class CursedRegistry {
         UPCYCLING_SCREEN_HANDLER= ScreenHandlerRegistry.registerSimple(getID("upcycling_machine"), (int syncId, PlayerInventory inventory) -> {
             return new UpcyclingScreenHandler(UPCYCLING_SCREEN_HANDLER, syncId, inventory, ScreenHandlerContext.EMPTY);
         });
+
+        Registry.register(Registry.STRUCTURE_PIECE, getID("treestand_piece"), TREESTAND_PIECE_TYPE);
+        /**
+         * Fabric API allows feature registry this way. Thanks :)
+         */
+        FabricStructureBuilder.create(getID("treestand"), TREESTAND_STRUCTURE)
+                .step(GenerationStep.Feature.SURFACE_STRUCTURES)
+                .defaultConfig(32, 8, 12345)
+                .adjustsSurface()
+                .register();
+
+        BuiltinRegistries.add(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, new Identifier("tutorial", "my_structure"), TREESTAND_CONFIGURED);
 
 
 

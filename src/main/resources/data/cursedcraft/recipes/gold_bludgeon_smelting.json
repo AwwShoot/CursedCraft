@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "cursedcraft:gold_bludgeon"
+  },
+  "result": "minecraft:gold_ingot",
+  "experience": 0.0,
+  "cookingtime": 150
+}

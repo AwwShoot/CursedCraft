@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "minecraft:nether_wart_block"
+  },
+  "result": "cursedcraft:crimson_fnungus",
+  "experience": 0.5,
+  "cookingtime": 200
+}

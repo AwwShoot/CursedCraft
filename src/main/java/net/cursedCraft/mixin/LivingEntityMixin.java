@@ -29,14 +29,12 @@ public abstract class LivingEntityMixin extends Entity{
 
         if(this.getType().equals(EntityType.ZOMBIE)&&deathTime==19){
             ZombieEntity zombie=new ZombieEntity(EntityType.ZOMBIE, world);
-            if(world.getBlockState(new BlockPos(this.getX(), this.getY(), this.getZ())).isAir()){
-                System.out.println("zombie will spawn, giving it coordinates");
+            if(world.getBlockState(new BlockPos(this.getX(), this.getY(), this.getZ())).isAir()&&world.getBlockState(new BlockPos(this.getX(), this.getY()+1, this.getZ())).isAir()){
+
                 zombie.updatePosition(this.getX(), this.getY(), this.getZ());
-                System.out.println("coords received. spawning zombie");
+                //Zombies spawned no longer need to be initialized manually it seems, but they do still need a position manually set
                 world.spawnEntity(zombie);
-                System.out.println("Zombie spawned: initializing");
-                //zombie.initialize((ServerWorld)this.world, world.getLocalDifficulty(zombie.getBlockPos()), SpawnReason.SPAWNER , null, null);
-                System.out.println("zombie initialized, what's the problem?");
+
             }
 
         }
